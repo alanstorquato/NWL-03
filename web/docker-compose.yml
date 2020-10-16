@@ -1,0 +1,13 @@
+version: '3.1'
+services: 
+    client:
+        container_name: node_nlw03
+        stdin_open: true # without this node doesn't start
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        ports: 
+            - 3000:3000
+        volumes: 
+            - .:/app
+    
