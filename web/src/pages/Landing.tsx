@@ -19,7 +19,7 @@ function Landing() {
             </main>
 
             <div className="location">
-                <strong>Caraícuiba</strong>
+                <strong>Carapicuíba</strong>
                 <span>São Paulo</span>
             </div>
 

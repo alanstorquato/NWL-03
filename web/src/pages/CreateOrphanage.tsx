@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
-import { LeafletMouseEvent} from 'leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 import { useHistory } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 
@@ -13,7 +13,7 @@ import api from "../services/api";
 export default function CreateOrphanage() {
   const history = useHistory();
 
-  const[position, setPosition] = useState({latitude: 0, longitude: 0})
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
 
   const [name, setName] = useState('');
   const [about, setAbout] = useState('');
@@ -24,7 +24,7 @@ export default function CreateOrphanage() {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   function handleMapClick(event: LeafletMouseEvent) {
-    const {lat, lng} = event.latlng;
+    const { lat, lng } = event.latlng;
     setPosition({
       latitude: lat,
       longitude: lng
@@ -32,7 +32,7 @@ export default function CreateOrphanage() {
   }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>) {
-    if(!event.target.files){
+    if (!event.target.files) {
       return
     }
 
@@ -40,7 +40,7 @@ export default function CreateOrphanage() {
 
     setImages(selectedImages)
 
-    const selectedImagesPreview = selectedImages.map( image => {
+    const selectedImagesPreview = selectedImages.map(image => {
       return URL.createObjectURL(image);
     });
 
@@ -78,41 +78,41 @@ export default function CreateOrphanage() {
   return (
     <div id="page-create-orphanage">
 
-    <Sidebar></Sidebar>
-    
+      <Sidebar></Sidebar>
+
       <main>
         <form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
 
-            <Map 
-              center={[-27.2092052,-49.6401092]} 
+            <Map
+              center={[-27.2092052, -49.6401092]}
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onclick={handleMapClick}
             >
-              <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+              <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-              { position.latitude !=0 && (
-                <Marker interactive={false} icon={mapIcon} position={[position.latitude,position.longitude]} />
+              {position.latitude != 0 && (
+                <Marker interactive={false} icon={mapIcon} position={[position.latitude, position.longitude]} />
               )}
             </Map>
 
             <div className="input-block">
               <label htmlFor="name">Nome</label>
-              <input 
-                id="name" 
-                value={name} 
+              <input
+                id="name"
+                value={name}
                 onChange={event => setName(event.target.value)} />
             </div>
 
             <div className="input-block">
               <label htmlFor="about">Sobre <span>Máximo de 300 caracteres</span></label>
-              <textarea 
-                id="name" 
-                value={about} 
-                onChange={event => 
-                setAbout(event.target.value)} maxLength={300} />
+              <textarea
+                id="name"
+                value={about}
+                onChange={event =>
+                  setAbout(event.target.value)} maxLength={300} />
             </div>
 
             <div className="input-block">
@@ -120,18 +120,19 @@ export default function CreateOrphanage() {
 
               <div className="images-container">
 
-                  {previewImages.map(image => {
-                    return (
-                      <img key={image} src={image} alt={name} />
-                    )
-                  })}
+                {previewImages.map(image => {
+                  return (
+                    <img key={image} src={image} alt={name} />
+                  )
+                })}
 
-              <label htmlFor="image[]" className="new-image">
-                <FiPlus size={24} color="#15b6d6" />
-              </label>
+                <label htmlFor="image[]" className="new-image">
+                  <FiPlus size={24} color="#15b6d6" />
+                </label>
+                
               </div>
 
-              <input multiple onChange={handleSelectImages} type="file" id="image[]"/>
+              <input multiple onChange={handleSelectImages} type="file" id="image[]" />
             </div>
           </fieldset>
 
@@ -140,34 +141,34 @@ export default function CreateOrphanage() {
 
             <div className="input-block">
               <label htmlFor="instructions">Instruções</label>
-              <textarea 
-              id="instructions" 
-              value={instructions} 
-              onChange={event => setInstructions(event.target.value)} />
+              <textarea
+                id="instructions"
+                value={instructions}
+                onChange={event => setInstructions(event.target.value)} />
             </div>
 
             <div className="input-block">
               <label htmlFor="opening_hours">Horario de funcionamento</label>
-              <input 
-              id="opening_hours" 
-              value={opening_hours} 
-              onChange={event => setOpeningHours(event.target.value)} />
+              <input
+                id="opening_hours"
+                value={opening_hours}
+                onChange={event => setOpeningHours(event.target.value)} />
             </div>
 
             <div className="input-block">
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
 
               <div className="button-select">
-                <button 
-                  type="button" 
-                  className={open_on_weekends ? 'active': ''}
+                <button
+                  type="button"
+                  className={open_on_weekends ? 'active' : ''}
                   onClick={() => setOpenOnWeekends(true)}>
                   Sim
                 </button>
 
-                <button 
+                <button
                   type="button"
-                  className={!open_on_weekends ? 'active': ''}
+                  className={!open_on_weekends ? 'active' : ''}
                   onClick={() => setOpenOnWeekends(false)}>
                   Não
                 </button>
